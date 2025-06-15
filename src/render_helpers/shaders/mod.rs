@@ -107,11 +107,14 @@ impl Shaders {
                     UniformName::new("corner_radius", UniformType::_1f),
                     UniformName::new("alpha", UniformType::_1f),
                     UniformName::new("noise", UniformType::_1f),
+                    UniformName::new("brightness", UniformType::_1f),
+                    UniformName::new("contrast", UniformType::_1f),
+                    UniformName::new("saturation", UniformType::_1f),
                     UniformName::new("geo", UniformType::_4f),
                 ],
             )
             .map_err(|err| {
-                warn!("error compiling clipped surface shader: {err:?}");
+                warn!("error compiling blur shader: {err:?}");
             })
             .ok();
 

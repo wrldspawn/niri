@@ -745,6 +745,12 @@ pub struct Blur {
     pub radius: FloatOrInt<0, 1024>,
     #[knuffel(child, unwrap(argument), default = Self::default().noise)]
     pub noise: FloatOrInt<0, 1024>,
+    #[knuffel(child, unwrap(argument), default = Self::default().brightness)]
+    pub brightness: FloatOrInt<0, 1>,
+    #[knuffel(child, unwrap(argument), default = Self::default().contrast)]
+    pub contrast: FloatOrInt<0, 1>,
+    #[knuffel(child, unwrap(argument), default = Self::default().saturation)]
+    pub saturation: FloatOrInt<0, 1>,
 }
 
 impl Default for Blur {
@@ -754,6 +760,9 @@ impl Default for Blur {
             passes: 2,
             radius: FloatOrInt(4.),
             noise: FloatOrInt(0.),
+            brightness: FloatOrInt(1.),
+            contrast: FloatOrInt(1.),
+            saturation: FloatOrInt(1.),
         }
     }
 }
@@ -1581,6 +1590,12 @@ pub struct BlurRule {
     pub radius: Option<FloatOrInt<0, 1024>>,
     #[knuffel(child, unwrap(argument))]
     pub noise: Option<FloatOrInt<0, 1024>>,
+    #[knuffel(child, unwrap(argument))]
+    pub brightness: Option<FloatOrInt<0, 1>>,
+    #[knuffel(child, unwrap(argument))]
+    pub contrast: Option<FloatOrInt<0, 1>>,
+    #[knuffel(child, unwrap(argument))]
+    pub saturation: Option<FloatOrInt<0, 1>>,
 }
 
 #[derive(knuffel::Decode, Debug, Default, Clone, Copy, PartialEq)]
@@ -2535,6 +2550,18 @@ impl BlurRule {
         if let Some(x) = other.noise {
             self.noise = Some(x);
         }
+
+        if let Some(x) = other.brightness {
+            self.brightness = Some(x);
+        }
+
+        if let Some(x) = other.contrast {
+            self.contrast = Some(x);
+        }
+
+        if let Some(x) = other.saturation {
+            self.saturation = Some(x);
+        }
     }
 
     pub fn resolve_against(&self, mut config: Blur) -> Blur {
@@ -2554,6 +2581,18 @@ impl BlurRule {
 
         if let Some(x) = self.noise {
             config.noise = x;
+        }
+
+        if let Some(x) = self.brightness {
+            config.brightness = x;
+        }
+
+        if let Some(x) = self.contrast {
+            config.contrast = x;
+        }
+
+        if let Some(x) = self.saturation {
+            config.saturation = x;
         }
 
         config
