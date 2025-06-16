@@ -28,6 +28,9 @@ pub enum BlurRenderElement {
         tex: OptimizedBlurTextureElement,
         corner_radius: f32,
         noise: f32,
+        brightness: f32,
+        contrast: f32,
+        saturation: f32,
         scale: f64,
     },
     /// Use true blur.
@@ -100,6 +103,9 @@ impl BlurRenderElement {
                 tex: texture.into(),
                 corner_radius,
                 noise: config.noise.0 as f32,
+                brightness: config.brightness.0 as f32,
+                contrast: config.contrast.0 as f32,
+                saturation: config.saturation.0 as f32,
                 scale,
             }
         } else {
@@ -273,6 +279,9 @@ fn draw_true_blur(
                 ),
                 Uniform::new("alpha", alpha),
                 Uniform::new("noise", config.noise.0 as f32),
+                Uniform::new("brightness", config.brightness.0 as f32),
+                Uniform::new("contrast", config.contrast.0 as f32),
+                Uniform::new("saturation", config.saturation.0 as f32),
                 Uniform::new("corner_radius", corner_radius),
             ],
         )
@@ -306,6 +315,9 @@ impl RenderElement<GlesRenderer> for BlurRenderElement {
                 corner_radius,
                 noise,
                 scale,
+                brightness,
+                contrast,
+                saturation,
             } => {
                 let downscaled_dst = Rectangle::new(
                     dst.loc,
@@ -341,6 +353,9 @@ impl RenderElement<GlesRenderer> for BlurRenderElement {
                             ),
                             Uniform::new("corner_radius", *corner_radius),
                             Uniform::new("noise", *noise),
+                            Uniform::new("brightness", *brightness),
+                            Uniform::new("contrast", *contrast),
+                            Uniform::new("saturation", *saturation),
                             Uniform::new("alpha", self.alpha()),
                         ],
                     );

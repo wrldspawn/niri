@@ -15,6 +15,9 @@ varying vec2 v_coords;
 uniform vec4 geo;           // x, y, width, height
 uniform float corner_radius;
 uniform float noise;
+uniform float brightness;
+uniform float contrast;
+uniform float saturation;
 
 // Taken from https://github.com/wlrfx/scenefx/blob/main/render/fx_renderer/gles3/shaders/blur_effects.frag
 mat4 brightnessMatrix() {
